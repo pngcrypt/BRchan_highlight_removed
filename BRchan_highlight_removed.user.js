@@ -45,7 +45,6 @@
 			setTimeout(update, update_time * 1000);
 		});
 	})();
-	// setTimeout(update, update_time * 1000);
 
 	function difference (first, second) {
 		var merged = {};
