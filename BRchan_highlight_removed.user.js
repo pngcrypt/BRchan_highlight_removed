@@ -26,6 +26,10 @@
 		"</style>");
 
 	function update() {
+		if(!latestPosts) {
+			if(!(latestPosts = getPosts($(document)))) // init, get posts from page
+				return; // wrong year...
+		}
 		$.ajax({
 			url: document.location,
 			cache: false,
@@ -34,10 +38,6 @@
 			dataType: 'text'
 		})
 		.success(function (data) {
-			if(!latestPosts) {
-				if(!(latestPosts = getPosts($(document)))) // get posts from page
-					return;
-			}
 			var activePosts = getPosts($(data));
 			if(!activePosts)
 				return; // wrong answer
