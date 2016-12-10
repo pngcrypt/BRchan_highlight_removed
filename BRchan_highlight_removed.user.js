@@ -1,8 +1,9 @@
 // ==UserScript==
 // @name         BRchan highlight removed
 // @namespace    https://www.brchan.org/
-// @version      1.0.1
+// @version      1.0.2
 // @author       yugo-salem, pngcrypt
+// @updateURL    https://raw.github.com/pngcrypt/BRchan_highlight_removed/master/BRchan_highlight_removed.meta.js
 // @include      http*://www.brchan.org/*
 // @include      http*://brchan.org/*
 // @grant        none
@@ -44,7 +45,9 @@
 			var removed = $(latestPosts).not(activePosts);
 			$.each(removed, function (index, value) {
 				console.log('post #' + value + ' removed');
-				$('#reply_' + value).addClass('post--removed');
+				$('#reply_' + value)
+					.addClass('post--removed')
+					.find('a.post_no:not([id])').attr('id', value); // add id in post_no (disable counter in Rusifikator)
 			});
 			latestPosts = activePosts;
 		})
