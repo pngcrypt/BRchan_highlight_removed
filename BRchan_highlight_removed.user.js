@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         BRchan highlight removed
 // @namespace    https://www.brchan.org/
-// @version      1.0.3
+// @version      1.0.4
 // @author       yugo-salem, pngcrypt
 // @updateURL    https://raw.github.com/pngcrypt/BRchan_highlight_removed/master/BRchan_highlight_removed.meta.js
 // @include      http*://www.brchan.org/*
@@ -13,7 +13,8 @@
 ;(function (root) {
 'use strict';
 	var $ = root.$,
-		update_time = 60; // period of thread update (sec)
+		update_time = 60, // period of thread update (sec)
+		hide_mode = 1; // 0 - show deleted, 1 - minimize; 2 - hide
 
 	// check jQuery, CloudFlare, in-thread & dollchan script
 	if(!$ || !window.location.href.match(/\/res\/\d+/) || $('head title').text().match('CloudFlare') || $('#de-panel-buttons > a').length > 1)
@@ -22,7 +23,10 @@
 	console.log('BRchan HL-removed started');
 
 	$('head').append("<style>" +
-		".post--removed {background-image: none !important; background-color: #faa !important; border-style: dotted !important}" +
+		".post--removed {background-image: none !important; background-color: #faa !important; border-style: dotted !important;}" +
+		".post--min > div, .post--min > .controls {display: none;}" +
+		".post--min:hover > div, .post--min:hover > .controls {display: block;}" +
+		".post--hide, .post--hide + br {display: none !important;}" +
 		"</style>");
 
 	function update() {
@@ -46,7 +50,7 @@
 			$.each(activePosts, function (index, value) {
 				console.log('post #' + value + ' removed');
 				$('#reply_' + value)
-					.addClass('post--removed')
+					.addClass('post--removed ' + hide_mode)
 					.find('a.post_no').attr('id', value); // add id in post_no (disable counter in Rusifikator)
 			});
 		})
@@ -64,6 +68,7 @@
 		});
 	}
 
+	hide_mode = hide_mode == 1 ? 'post--min' : (hide_mode == 2 ? 'post--hide' : '');
 	setTimeout(update, update_time * 1000);
 
 })(window);
