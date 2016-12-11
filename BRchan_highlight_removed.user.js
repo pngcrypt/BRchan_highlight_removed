@@ -30,11 +30,7 @@
 		"</style>");
 
 	function update() {
-		var latestPosts = getPosts($(document)); // get posts from page
-		if(!latestPosts) 
-			return; // wrong year...
-
-		// update thread
+		// update thread (get new posts)
 		$.ajax({
 			url: document.location,
 			cache: false,
@@ -43,10 +39,13 @@
 			dataType: 'text'
 		})
 		.success(function (data) {
-			var activePosts = getPosts($(data));
+			var latestPosts = getPosts($(document)); // get posts from page
+			if(!latestPosts) 
+				return; // wrong year...
+			var activePosts = getPosts($(data)); // get new posts
 			if(!activePosts)
 				return; // wrong answer
-			activePosts = $(latestPosts).not(activePosts);
+			activePosts = $(latestPosts).not(activePosts); // deleted posts
 			$.each(activePosts, function (index, value) {
 				console.log('post #' + value + ' removed');
 				$('#reply_' + value)
