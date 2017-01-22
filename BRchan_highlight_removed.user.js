@@ -6,6 +6,7 @@
 // @updateURL    https://raw.github.com/pngcrypt/BRchan_highlight_removed/master/BRchan_highlight_removed.meta.js
 // @include      http*://www.brchan.org/*
 // @include      http*://brchan.org/*
+// @include      http://brchanansdnhvvnm.onion/*
 // @grant        none
 // @run-at       document-idle
 // ==/UserScript==
